@@ -128,6 +128,16 @@ const httpServer = createServer(async (req, res) => {
     return;
   }
 
+  if (req.method === "GET" && url.pathname === "/.well-known/openai-apps-challenge") {
+    const token = process.env.OPENAI_DOMAIN_VERIFICATION_TOKEN;
+    if (!token) {
+      res.writeHead(404, { "content-type": "text/plain; charset=utf-8" }).end("Not configured");
+      return;
+    }
+    res.writeHead(200, { "content-type": "text/plain; charset=utf-8" }).end(token);
+    return;
+  }
+
   if (req.method === "GET" && url.pathname === "/health") {
     res.writeHead(200, { "content-type": "application/json; charset=utf-8" }).end(
       JSON.stringify({
