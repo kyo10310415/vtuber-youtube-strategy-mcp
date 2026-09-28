@@ -2,6 +2,15 @@
 
 MCP backend for the public **With MCP** version of VTuber YouTube Strategy Analyzer.
 
+## Public pages
+
+- Website: `/`
+- Support: `/support`
+- Privacy Policy: `/privacy`
+- Terms of Service: `/terms`
+- Health: `/health`
+- MCP endpoint: `/mcp`
+
 ## Tools
 
 - `analyze_metrics`: deterministic aggregation of normalized YouTube per-video metrics
@@ -19,7 +28,7 @@ npm run dev
 Health check:
 
 ```text
-http://localhost:8787/
+http://localhost:8787/health
 ```
 
 MCP endpoint:
@@ -47,17 +56,15 @@ http://localhost:8787/mcp
 3. Runtime: **Node**
 4. Build Command: `npm install && npm run build`
 5. Start Command: `npm start`
-6. Health Check Path: `/`
+6. Health Check Path: `/health`
 7. Use Node.js 22 or newer
 8. Deploy
 
-After deployment, the MCP URL will be:
+Production MCP endpoint:
 
 ```text
-https://YOUR-SERVICE.onrender.com/mcp
+https://vtuber-youtube-strategy-mcp.onrender.com/mcp
 ```
-
-Use that URL in the plugin package's `mcp.json` and `skills/youtube-strategy/agents/openai.yaml`.
 
 ## Privacy
 
