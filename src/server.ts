@@ -1,4 +1,6 @@
 import { createServer } from "node:http";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { z } from "zod";
@@ -7,6 +9,7 @@ import { scoreGames } from "./lib/scoring.js";
 
 const port = Number(process.env.PORT ?? 8787);
 const MCP_PATH = "/mcp";
+const PUBLIC_DIR = join(process.cwd(), "public");
 
 function createStrategyServer() {
   const server = new McpServer(
@@ -96,6 +99,16 @@ function createStrategyServer() {
   return server;
 }
 
+async function serveStatic(res: import("node:http").ServerResponse, file: string, contentType: string) {
+  try {
+    const body = await readFile(join(PUBLIC_DIR, file));
+    res.writeHead(200, { "content-type": contentType });
+    res.end(body);
+  } catch {
+    res.writeHead(404).end("Not Found");
+  }
+}
+
 const httpServer = createServer(async (req, res) => {
   if (!req.url) {
     res.writeHead(400).end("Missing URL");
@@ -115,14 +128,35 @@ const httpServer = createServer(async (req, res) => {
     return;
   }
 
-  if (req.method === "GET" && url.pathname === "/") {
-    res.writeHead(200, { "content-type": "application/json" }).end(
+  if (req.method === "GET" && url.pathname === "/health") {
+    res.writeHead(200, { "content-type": "application/json; charset=utf-8" }).end(
       JSON.stringify({
         name: "VTuber YouTube Strategy Analyzer MCP",
         version: "1.0.0",
         status: "ok"
       })
     );
+    return;
+  }
+
+  if (req.method === "GET" && url.pathname === "/") {
+    await serveStatic(res, "index.html", "text/html; charset=utf-8");
+    return;
+  }
+  if (req.method === "GET" && url.pathname === "/support") {
+    await serveStatic(res, "support.html", "text/html; charset=utf-8");
+    return;
+  }
+  if (req.method === "GET" && url.pathname === "/privacy") {
+    await serveStatic(res, "privacy.html", "text/html; charset=utf-8");
+    return;
+  }
+  if (req.method === "GET" && url.pathname === "/terms") {
+    await serveStatic(res, "terms.html", "text/html; charset=utf-8");
+    return;
+  }
+  if (req.method === "GET" && url.pathname === "/style.css") {
+    await serveStatic(res, "style.css", "text/css; charset=utf-8");
     return;
   }
 
