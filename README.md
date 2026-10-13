@@ -1,6 +1,6 @@
-# VTuber YouTube Strategy Analyzer MCP
+# VTuber Channel Analyzer MCP
 
-MCP backend for the public **With MCP** version of VTuber YouTube Strategy Analyzer.
+MCP backend for the public **With MCP** version of VTuber Channel Analyzer.
 
 ## Public pages
 
@@ -13,7 +13,7 @@ MCP backend for the public **With MCP** version of VTuber YouTube Strategy Analy
 
 ## Tools
 
-- `analyze_metrics`: deterministic aggregation of normalized YouTube per-video metrics
+- `analyze_metrics`: deterministic aggregation of normalized video platform per-video metrics
 - `score_game_candidates`: deterministic comparison of candidate games
 
 The server is stateless and does not require a database or authentication in v1.
