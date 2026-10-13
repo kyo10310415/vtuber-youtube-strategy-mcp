@@ -1,6 +1,6 @@
 {
-  "name": "vtuber-youtube-strategy-mcp",
-  "version": "1.0.0",
+  "name": "vtuber-channel-analyzer-mcp",
+  "version": "1.1.1",
   "private": true,
   "type": "module",
   "engines": {
