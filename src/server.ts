@@ -14,21 +14,21 @@ const PUBLIC_DIR = join(process.cwd(), "public");
 function createStrategyServer() {
   const server = new McpServer(
     {
-      name: "vtuber-youtube-strategy",
-      version: "1.0.0"
+      name: "vtuber-channel-analyzer",
+      version: "1.1.1"
     },
     {
       instructions:
-        "Use these read-only tools for deterministic calculations only. Do not send raw CSV files or secrets."
+        "Use these read-only tools for deterministic channel analysis calculations only. Do not send raw CSV files or secrets."
     }
   );
 
   server.registerTool(
     "analyze_metrics",
     {
-      title: "Analyze YouTube metrics",
+      title: "Analyze channel metrics",
       description:
-        "Calculate deterministic aggregate YouTube metrics from normalized per-video rows after CSV parsing.",
+        "Calculate deterministic aggregate channel metrics from normalized per-video rows after CSV parsing.",
       inputSchema: {
         videos: z.array(
           z.object({
@@ -141,8 +141,8 @@ const httpServer = createServer(async (req, res) => {
   if (req.method === "GET" && url.pathname === "/health") {
     res.writeHead(200, { "content-type": "application/json; charset=utf-8" }).end(
       JSON.stringify({
-        name: "VTuber YouTube Strategy Analyzer MCP",
-        version: "1.0.0",
+        name: "VTuber Channel Analyzer MCP",
+        version: "1.1.1",
         status: "ok"
       })
     );
