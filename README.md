@@ -73,3 +73,7 @@ Do not send raw CSV files, credentials, or secrets to the MCP tools. The intende
 ## 依存の固定（SEC-046）
 package-lock.jsonで宣言範囲内の依存解決とintegrityを固定しました。依存導入はnpm ci、監査用の隔離導入はnpm ci --ignore-scriptsを使用してください。manifestの範囲や新しい依存は変更していません。更新時はlock差分とビルドを確認します。
 Node22.23.4でTypeScript build、およびローカルHTTPのhealth/initialize/tools/list（2ツール）の成功を確認。ツール本体を呼ぶ分析や本番データ処理は試験していません。
+
+## Security protocol regression
+
+Zod is pinned to the patched 4.6.x line for CVE-2023-54404 / GHSA-mrhx-c7xc-m3w5. The existing MCP SDK supports both Zod 3 and 4, so no SDK upgrade is required. `npm test` builds and starts a temporary local-only test instance, verifies both tool schemas/list and valid/invalid calls, then stops it. The test uses synthetic data and invokes no provider/AI services. Existing schema limits (5,000 videos / 100 games) and transport body/batch limits remain in effect. Production deployment and shared consumer compatibility remain separate checks.
